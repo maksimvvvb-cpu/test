@@ -28,7 +28,7 @@ def addViewToPost(channel='google', post='1', key=None, cookie=None, proxy=None)
             'x-requested-with': 'XMLHttpRequest',
             'user-agent': 'Mozilla/5.0 (Windows NT 6.2; Win64; x64; rv:59.0) Gecko/20100101 Firefox/59.0',
             'referer': 'https://t.me/'+channel+'/'+post+'?embed=1',
-            'cookie': cookie}, proxies={'https': proxy}
+            'cookie': cookie}, proxies={'http': proxy}
         )
         return r.text
     except Exception as e:
@@ -37,8 +37,8 @@ def addViewToPost(channel='google', post='1', key=None, cookie=None, proxy=None)
 def run(channel, post, proxy):
     max.acquire()
     s = fetchData(channel, post, 'https://'+proxy)
-    if isinstance(s, dict):
-        l = addViewToPost(channel, post, s['key'], s['cookie'], 'https://'+proxy)
+    if True:
+        l = addViewToPost(channel, post, s['key'], s['cookie'], 'socks5://'+proxy)
         if l is not False:
             print('Proxy '+proxy+' finished its job successfully!')
     max.release()
